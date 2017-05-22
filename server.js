@@ -2,6 +2,8 @@ const express = require('express');
 const handlebars = require('hbs');
 const fs = require('fs');
 
+const port = process.env.PORT || 3000;
+
 var app = express();
 
 handlebars.registerPartials(__dirname + "/views/partials");
@@ -14,11 +16,6 @@ app.use((req, res, next) => {
 
     fs.appendFile('server.log', log + '\n');
     next();
-});
-app.use((req, res, next) => {
-    res.render('basic.hbs', {
-        pageTitle: "Site under maintainance!"
-    });
 });
 
 handlebars.registerHelper("getCurrentYear", () => {
@@ -48,6 +45,6 @@ app.get('/bad', (req, res) => {
     });
 });
 
-app.listen(3000, () => {
-    console.log("Server is up and running on port 3000.");
+app.listen(port, () => {
+    console.log(`Server is up and running on port ${port}.`);
 });
